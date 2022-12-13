@@ -1,0 +1,15 @@
+---
+ - hosts: agent                                                                                                                                                            tasks:                                                                                                                                                                   - name: installing docker on agent
+      apt:
+        name:  docker.io
+        state: latest
+        update_cache: true
+        
+        
+---
+ - hosts: agent
+    apt:
+    name: git
+    state: latest
+    update-cache: true
+    
