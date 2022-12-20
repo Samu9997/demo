@@ -1,0 +1,60 @@
+make a floder mkdir role in asnible master ( /etc/ansible: cd role)
+ansible-galaxy init rolename ( here we can see that rolename has been created the moment we enter) 
+to test above is succesfull or not type ( tree rolename)
+
+vi rolename/tasks/install.yml ( here we can we that we are creating a install file under tasks)
+[
+---
+ - name: install apache2 service
+   apt:
+     name: apache2
+     state: present
+     update_cache: true
+ ]
+ 
+ vi rolename/tasks/config.yml
+ [---
+ - name: copying apache2.conf files
+   copy:
+     src: apache2.conf
+     dest: /etc/apache2
+     notify:
+       restart apache2 service
+ - name: copy index.html file
+   copy:
+     src: index.html
+     dest: /var/www/html/index.html
+     ]
+     
+     vi rolename/tasks/service.yml
+     [
+     ---
+ - name: service start
+   service:  
+      name: apache2
+      state: started
+                    ]
+                    
+                    
+vi rolename/tasks/main.yml
+[
+---
+# tasks file for rolename
+#
+  - include_tasks: install.yml
+  - include_tasks: configure.yml
+  - include_tasks: service.yml
+                                ]
+vi rolename/handlers/main.yml
+[
+
+---
+# handlers file for rolename
+#
+ - name: restart apache2 service
+   service:
+     name: apache2
+     state: restarted
+     ]
+     
+     
